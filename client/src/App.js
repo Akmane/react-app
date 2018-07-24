@@ -1,87 +1,87 @@
 import React, { Component } from 'react';
-//import Header from './components/Header';
-import Input from './components/Input';
 import './App.css';
+import Input from './components/Input';
+import Label from './components/Label';
+import Button from './components/Button';
 
-
+const defaultState = {
+    input : {
+      name : "Akshay Mane",
+      phone : "9619249577"
+    },
+      form : 'Label',
+      updatedAt : new Date()
+    };
 class App extends Component {
-  defaultState = {
-    inputs : [
-      {
-        label : "First Name",
-        type : "text",
-        name : "fname",
-        placeholder : "Enter First Name"
-      },
-      {
-        label : "Last Name",
-        type : "text",
-        name : "lname",
-        placeholder : "Enter Last Name"
-      },
-      {
-        label : "Email Id",
-        type : "text",
-        name : "email",
-        placeholder : "Enter Email ID"
-      }
-    ],
-    data : 0,
-    inputValues : null
-  };
-  constructor(){
-    super();
-    this.state = this.defaultState;
-    this.baseState = this.state;
-    this.clicked = this.clicked.bind(this);
-    this.resetState = this.resetState.bind(this);
-  }
-  resetState(){
-    console.log("Hello - ",Input);
-    
-    this.setState(this.defaultState);
-  }
-  clicked(){
-    let values = [];
-    this.state.inputs.map((input) => {
-      let inputBox = document.getElementById(input.name);
-      values[input.name] = inputBox.value;
-      return null;
-    })
-    this.setState({inputValues: values})
-    //console.log("Value ",values);
-    this.setState({data:this.state.data+1})
-    //console.log("Node - ",this.state.data);
-  }
-  render() {
-    console.log("This is state : ",this.state);
-    let inputItem;
-    inputItem = this.state.inputs.map(input => {
-      return (
-        <Input key={input.name} input={input} />
-      )
-    })
-    let inputValueItem;
-    if(this.state.inputValues){
-      inputValueItem = this.state.inputs.map(input => {
 
-        if(this.state.inputValues[input.name])
-          return (
-            <p><label>{input.label}</label> :  {this.state.inputValues[input.name]}</p>
-          )
-        return null;
-      })
+  constructor(props){
+    super(props);
+    this.state = {};
+    this.state.phoneBook = [];
+    this.state.phoneBook.push(defaultState);
+  }
+
+  componentDidMount(){
+    var newData = {};
+    newData = {
+      input : {
+        name : "vaibhav Mane",
+        phone : "9619449889"
+      },
+      form : 'Label',
+      updatedAt : new Date()
+    }
+    //this.state.push(newData);
+    this.setState(({ phoneBook : [...this.state.phoneBook, newData]}));
+  }
+
+  editForm(i){
+
+  }
+
+  addNewContact = (name, phone) => {
+    var newData = {};
+    newData = {
+      name : "",
+      phone : ""
+    }
+    //this.state.push(newData);
+    this.setState(({ phoneBook : [...this.state.phoneBook, newData]}));
+  }
+
+  /*addNewInputContats = () => {
+    return (
+      <React.Fragment>
+        <Input name="name" />
+        <Input name="phone" />
+        <
+      </React.Fragment>
+    )
+  }*/
+
+  render() {
+    //console.log(this.state)
+    let contacts = this.state.phoneBook;
+    var data = [];
+    for(var i = 0; i < contacts.length; i++){
+      console.log("this is data  : ",contacts[i].input.name);
+      var oneContact = '';
+      if(contacts[i].form === 'Label' ){
+        oneContact = <div><Label data={contacts[i].input} /><Button clickEvent={this.editForm(i)}  name="Edit"/></div> ;
+      }else{
+        oneContact = <div><Input data={contacts[i].input} /><Button clickEvent={this.saveForm(i)} name="Save"/></div> ;
+      }
+      data.push(oneContact);
     }
     return (
-      <div className="app_component">
-        {inputItem}
-        <button className="btn btn-sm btn-primary" onClick={this.clicked} >Submit</button>
-        {inputValueItem}
-        clicked {this.state.data}
-        <button className="btn btn-sm btn-warning" onClick={this.resetState}>Reset</button>
-      </div>
-    );
+      <React.Fragment>
+        <div>Hello</div>
+        {data}
+        <button onClick={this.addNewContact}>Add New Contact</button>
+      </React.Fragment>
+    )
   }
+
 }
 
 export default App;
