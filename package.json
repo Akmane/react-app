@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Akshay Mane",
+  "author": "Akshay",
   "license": "ISC",
   "dependencies": {
     "create-react-app": "^1.5.2",
